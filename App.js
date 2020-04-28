@@ -3,9 +3,9 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
-import Contacts from './screens/Contacts';
-import Profile from './screens/Profile';
+//import ContactLisitem from './components/ContactLisitem';
+import Trips from './screens/Trips';
+import Trip from './screens/Trip';
 
 const Stack = createStackNavigator();
 
@@ -15,13 +15,14 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
-            options={{ title: 'My Contacts'}}
-            name="Contacts"
-            component={Contacts}
+            options={{ title: 'Trips'}}
+            name="Trips"
+            component={Trips}
           />
           <Stack.Screen
-            name="Profile"
-            component={Profile}
+          options={{ title: 'Trip'}}
+            name="Trip"
+            component={Trip}
           />
         </Stack.Navigator>
       </NavigationContainer>

@@ -1,51 +1,61 @@
 import uuidv4 from 'uuid/v4';
-
+import moment from "moment";
 import capitalize from '../utils/capitalize';
 
-const mapContact = contact => {
+const mapTrip = trip => {
   const {
     id, start_time, name, distance, duration
-  } = contact;
-
+  } = trip;
   return {
     id: uuidv4(),
     trip_id: id, 
-    start: start_time,
+    start: moment(start_time).format("D/MMMM/YYYY  -  h:mm A"),
     name: name, 
     avatar: '../assets/splash.png',
-    favorite: Math.random() >= 0.5, // randomly generate favorite contacts
-    cell: 'Distance: ' + distance,
-    email: 'Duration: ' + duration + 'mins',
+    //favorite: Math.random() >= 0.5, // randomly generate favorite contacts
+    distance: distance + 'km',
+    duration: duration + 'mins',
   };
 };
 
-export const fetchContacts = async () => {
-  //const response = await fetch('https://randomuser.me/api/?results=100&seed=fullstackio');
-  
-
+export const fetchTrips = async () => {
+ 
   const response = await fetch('http://localhost:3000/trips/', {
     method: 'GET',
     headers: {
       Accept: 'application/json',
       'Content-Type': 'application/json',
     }});
+    const tripData = await response.json();
 
-    const contactData = await response.json();
-
-
-  return contactData.trips.map(mapContact); //results = trips
+  return tripData.trips.map(mapTrip); //results = trips
 };
 
-export const fetchUserContact = async () => {
-  const response = await fetch('https://randomuser.me/api/?seed=fullstackio');
-  const userData = await response.json();
 
-  return mapContact(userData.results[0]);
-};
+const mapLocation = location => {
+  const {
+    trip_id, latitude, longitude, logged_at
+  } = location;
 
-export const fetchRandomContact = async () => {
-  const response = await fetch('https://randomuser.me/api/');
-  const userData = await response.json();
+  //console.log(location)
+  return {
+    trip_id,
+    latitude,
+    longitude,
+    logged_at,   // time: logged_at,
+  }
+}
 
-  return mapContact(userData.results[0]);
+export const fetchLocations = async (t_id) => { 
+ 
+  const response = await fetch('http://localhost:3000/trips/'+t_id+'/locations/', {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    }});
+
+    const locationData = await response.json();
+   
+    return locationData.locations.map(mapLocation); //results = trips
 };

@@ -7,25 +7,25 @@ import {
   ActivityIndicator,
 } from 'react-native';
 
-import ContactListItem from '../components/ContactListItem';
+import TripsOverview from '../components/TripsOverview';
 
-import { fetchContacts } from '../utils/api';
+import { fetchTrips} from '../utils/api';
 
 const keyExtractor = ({ id }) => id;
 
-export default class Contacts extends React.Component {
+export default class Trips extends React.Component {
   state = {
-    contacts: [],
+    trips: [],
     loading: true,
     error: false,
   };
 
   async componentDidMount() {
     try {
-      const contacts = await fetchContacts();
-
+      const trips = await fetchTrips();
+      // Update the states
       this.setState({
-        contacts,
+        trips,
         loading: false,
         error: false,
       });
@@ -38,28 +38,29 @@ export default class Contacts extends React.Component {
     }
   }
 
-  renderContact = ({ item }) => {
+  renderTrip= ({ item }) => {
     const { navigate } = this.props.navigation;
     const {
-      id, start, name, avatar, phone, cell, email
+      id, start, name, avatar, distance, duration
     } = item;
 
     return (
-      <ContactListItem
+      <TripsOverview
         name={name}
         avatar={avatar}
-        phone={start}
-        cell= {cell}
-        email= {email}
-        onPress={() => navigate('Profile', { contact: item })}
+        start={start}
+        distance= {distance}
+        duration = {duration}
+        onPress={() => navigate('Trip', { trip: item })}
       />
     );
   };
 
   render() {
-    const { loading, contacts, error } = this.state;
+    // here a copy of the variables is creates/instantiated
+    const { loading, trips, error } = this.state;
 
-    const contactsSorted = contacts.sort((a, b) =>
+    const tripsSorted = trips.sort((a, b) =>
       a.name.localeCompare(b.name));
 
     return (
@@ -69,9 +70,9 @@ export default class Contacts extends React.Component {
         {!loading &&
           !error && (
             <FlatList
-              data={contactsSorted}
+              data={tripsSorted}
               keyExtractor={keyExtractor}
-              renderItem={this.renderContact}
+              renderItem={this.renderTrip}
             />
           )}
       </View>

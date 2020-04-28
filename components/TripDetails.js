@@ -3,9 +3,10 @@ import { StyleSheet, View, Text } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import PropTypes from 'prop-types';
 
+
 import colors from '../utils/colors';
 
-export default function DetailListItem({ icon, title, subtitle }) {
+export default function TripDetails({ icon, title, subtitle }) {
   return (
     <View style={styles.borderContainer}>
       <View style={styles.wrapper}>
@@ -22,7 +23,6 @@ export default function DetailListItem({ icon, title, subtitle }) {
           )}
           <View style={styles.contentContainer}>
             <Text style={[styles.title]}>{title}</Text>
-
             {subtitle && <Text style={styles.subtitle}>{subtitle}</Text>}
           </View>
         </View>
@@ -31,13 +31,13 @@ export default function DetailListItem({ icon, title, subtitle }) {
   );
 }
 
-DetailListItem.propTypes = {
+TripDetails.propTypes = {
   icon: PropTypes.string,
   title: PropTypes.string.isRequired,
   subtitle: PropTypes.string,
 };
 
-DetailListItem.defaultProps = {
+TripDetails.defaultProps = {
   icon: null,
   subtitle: null,
 };
@@ -45,6 +45,7 @@ DetailListItem.defaultProps = {
 const styles = StyleSheet.create({
   borderContainer: {
     paddingLeft: 24,
+    paddingRight: 24,
   },
   wrapper: {
     flexDirection: 'row',
