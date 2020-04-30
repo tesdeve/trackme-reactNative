@@ -28,7 +28,7 @@ export default class Trip extends React.Component {
           <Text style={styles.textName}>{name}</Text>
         </View>
         <View style={styles.detailsSection}>
-          <TripDetails icon="bubble-chart" title="Done" subtitle={start} />                  
+          <TripDetails icon="bubble-chart" title="Dones" subtitle={start} />                  
           <TripDetails icon="map" title="Distance" subtitle={distance} />
           <TripDetails icon="watch" title="Duration" subtitle={duration} />  
         </View>

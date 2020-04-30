@@ -34,11 +34,12 @@ export const fetchTrips = async () => {
 
 const mapLocation = location => {
   const {
-    trip_id, latitude, longitude, logged_at
+     id, trip_id, latitude, longitude, logged_at
   } = location;
 
   //console.log(location)
   return {
+    id: uuidv4(),
     trip_id,
     latitude,
     longitude,

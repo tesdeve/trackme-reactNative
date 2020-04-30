@@ -8,8 +8,11 @@ import {
 } from 'react-native';
 
 import MapView from 'react-native-maps';
+import  { Marker } from 'react-native-maps';
+
 
 import { fetchLocations } from '../utils/api';
+const keyExtractor = ({ id }) => id;
 
 export default class MapThumbnail extends React.Component {
   state = {
@@ -21,8 +24,8 @@ export default class MapThumbnail extends React.Component {
   async componentDidMount() {
     try {
       //console.log(this.props)
-      const {trip} = this.props // Extraigame esta variable
-      const locations = await fetchLocations(trip);  
+      const {trip} = this.props // Extraigame el valor de esta variable
+      const locations = await fetchLocations(trip);  // Call to fetchLocations enviando el valor de la variable (trip=trip_id)
 
       this.setState({
         locations,  
@@ -42,6 +45,7 @@ export default class MapThumbnail extends React.Component {
 
   render() {
     const { loading, locations, error } = this.state;  
+    
     return (
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
@@ -49,25 +53,33 @@ export default class MapThumbnail extends React.Component {
         {!loading &&
           !error && (            
             <MapView style={styles.mapContainer}
-            initialRegion={{
-              latitude: locations[0].latitude,  
-              longitude: locations[0].longitude,  
-              latitudeDelta: 0.005,
-              longitudeDelta: 0.015,
-            }}>
+              initialRegion={{
+                latitude: locations[0].latitude,  
+                longitude: locations[0].longitude,  
+                latitudeDelta: 0.005,
+                longitudeDelta: 0.015,
+              }}
+            >
             <MapView.Polyline 
             coordinates={locations}  
             strokeWidth={3}
             strokeColor= "red"
             />
+            <Marker style={styles.markerBlue}
+              coordinate={locations[0]}
+            />
+            <Marker 
+            coordinate={locations[locations.length - 1]}
+            pinColor={'blue'}
+            />  
           </MapView>
-              
-       
           )}
       </View>
     );
   }
 }
+
+
 
 const styles = StyleSheet.create({
   container: {
@@ -79,8 +91,15 @@ const styles = StyleSheet.create({
     width: Dimensions.get('window').width,
     height: Dimensions.get('window').height,
   },
+  //markerBlue: {
+  //  color='blue',
+  //}
 });
 
 	
 	
 	
+
+
+
+
