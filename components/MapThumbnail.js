@@ -23,7 +23,7 @@ export default class MapThumbnail extends React.Component {
 
   async componentDidMount() {
     try {
-      //console.log(this.props)
+      console.log(this.props)
       const {trip} = this.props // Extraigame el valor de esta variable
       const locations = await fetchLocations(trip);  // Call to fetchLocations enviando el valor de la variable (trip=trip_id)
 
@@ -45,7 +45,7 @@ export default class MapThumbnail extends React.Component {
 
   render() {
     const { loading, locations, error } = this.state;  
-    
+   // console.log(locations)
     return (
       <View style={styles.container}>
         {loading && <ActivityIndicator size="large" />}
@@ -67,10 +67,12 @@ export default class MapThumbnail extends React.Component {
             />
             <Marker style={styles.markerBlue}
               coordinate={locations[0]}
+              title= 'Starting Point'
             />
             <Marker 
             coordinate={locations[locations.length - 1]}
             pinColor={'blue'}
+            title= 'Finish Point'
             />  
           </MapView>
           )}
