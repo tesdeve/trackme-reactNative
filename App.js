@@ -3,6 +3,8 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
+import Home from './screens/Home';
+import StartTrip from './screens/SartTrip';
 import Trips from './screens/Trips';
 import Trip from './screens/Trip';
 
@@ -14,12 +16,22 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            options={{ title: 'Home'}}
+            name="Home"
+            component={Home}
+          />
+          <Stack.Screen
+            options={{ title: 'StartTrip'}}
+            name="StartTrip"
+            component={StartTrip}
+          />
+          <Stack.Screen
             options={{ title: 'Trips'}}
             name="Trips"
             component={Trips}
           />
           <Stack.Screen
-          options={{ title: 'Trip'}}
+            options={{ title: 'Trip'}}
             name="Trip"
             component={Trip}
           />
