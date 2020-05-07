@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View, Text} from 'react-native';
 import Button from '../components/Button';
-import SimpleToggleButton from '../components/SimpleToggleButton';
-
+//import SimpleToggleButton from '../components/SimpleToggleButton';
+import ToggleButton from '../components/ToggleButton';
 
 import colors from '../utils/colors';
 
@@ -15,12 +15,6 @@ export default function Home({navigation}) {
     navigation.navigate('StartTrip')
   }
 
-
-  //const navigation = useNavigation();
-  // const buttonPressed = () => {
-  //   navigation.navigate('StartTrip')
-  // }
-  
   return (
 
       <View style={styles.container}>
@@ -29,9 +23,7 @@ export default function Home({navigation}) {
           onPress={tripsButton} 
         />
         
-         <SimpleToggleButton 
-          //onPress={ () => {this.props.navigation.navigate("StartTrip")} }
-         />
+         <ToggleButton />
 
         <Button 
           text='Start Trip' 
@@ -51,27 +43,3 @@ const styles = StyleSheet.create({
     backgroundColor: 'white',  
   }
 })
-
-
-        {/* <Button
-            text="Default"
-            onPress={() => null}
-          />
-          <Button
-            text="Default Outline"
-            outline
-            onPress={() => null}
-          />
-          <Button
-            text="Secondary Large"
-            size="large"
-            theme="secondary"
-            onPress={() => null}
-          />
-          <Button
-            text="Secondary Small Disabled"
-            size="small"
-            theme="secondary"
-            disabled
-            onPress={() => null}
-          />         */}

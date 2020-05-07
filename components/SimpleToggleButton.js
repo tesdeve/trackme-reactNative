@@ -12,7 +12,7 @@ export default class SimpleToggleButton extends Component {
   
 
   buttonPressed(){
-    alert('Que pasa tigre');
+    alert('Que pasa Tigre?');
     const newState = !this.state.toggle;
     this.setState({toggle:newState})
   }
