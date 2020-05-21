@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 
 import Icon from 'react-native-vector-icons/FontAwesome';;
-const Context = React.createContext('default value')
+
 
 
 export default class SimpleToggleButton extends Component {

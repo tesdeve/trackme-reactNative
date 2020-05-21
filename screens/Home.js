@@ -1,8 +1,9 @@
 import React from 'react';
 import { StyleSheet, View, Text} from 'react-native';
 import Button from '../components/Button';
-//import SimpleToggleButton from '../components/SimpleToggleButton';
 import ToggleButton from '../components/ToggleButton';
+
+//import { StartStopContext } from '../MyContext'
 
 import colors from '../utils/colors';
 
@@ -16,21 +17,24 @@ export default function Home({navigation}) {
   }
 
   return (
+  
+  <View style={styles.container}>
+    <Button 
+      text='Trips' 
+      onPress={tripsButton} 
+    />
 
-      <View style={styles.container}>
-        <Button 
-          text='Trips' 
-          onPress={tripsButton} 
-        />
-        
-         <ToggleButton />
 
-        <Button 
-          text='Start Trip' 
-          onPress={startButton}
-          theme="secondary"
-        /> 
-      </View> 
+      <ToggleButton />
+
+
+    <Button 
+      text='Start Trip' 
+      onPress={startButton}
+      theme="secondary"
+    /> 
+  </View> 
+    
   )
 }
 
