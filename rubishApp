@@ -3,9 +3,7 @@ import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
-
-import { StartStopProvider, StartStopContext } from './MyContext'
-
+import { StartStopContext, StartStopContextProvider} from './MyContext'
 
 import Home from './screens/Home';
 import StartTrip from './screens/SartTrip';
@@ -19,7 +17,8 @@ export default function App() {
   return (
     
       <View style={styles.container}>
-        <StartStopProvider>
+      <StartStopContextProvider>
+          
           <NavigationContainer>
           
             
@@ -47,7 +46,8 @@ export default function App() {
             </Stack.Navigator>
            
           </NavigationContainer>
-        </StartStopProvider>
+          
+         </StartStopContextProvider> 
       </View>
     
   );
