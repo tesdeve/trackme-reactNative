@@ -1,9 +1,6 @@
-
 import React, { useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-
-//import ToggleButton from '../components/ToggleButton';
 
 import { StartStopContext } from '../MyContext'
 
@@ -15,53 +12,32 @@ export default function StartTripButton(){
  const navigation = useNavigation()
  
  const buttonPressed = (startstrip) => {
-    //alert(" Toggle Base was= " + startstrip.toggleBase) 
-   // alert(" Toggle Base was= " + setToggleBase(startstrip.toggleBase)) 
-   //setToggle(!toggle)
-
-   ///if (startstrip.toggleBase == true) {
-    startstrip.setToggleBase(!startstrip.toggleBase)   
-    //startstrip.setToggleBase == startstrip.toggleBase
-   // alert(" Toggle Base CHANGED TO = " + startstrip.toggleBase)
-   }
-   // else if (startstrip.toggleBase == false) {
-   // setToggle(!toggle)
-  // startstrip.setToggleBase(!startstrip.toggleBase)
-    
-   // alert(" Toggle Base CHANGED TO = " + startstrip.toggleBase)
-  //}
-
- //}
-
- //const textValue = toggle? "Start Trip" : "Stop Trip";
- //const buttonBG = toggle? "green" : "red";
- //const textColor = toggle? "white" : "yellow";
+    startstrip.setToggleBase(!startstrip.toggleBase) 
+ }
 
   return (     
    <StartStopContext.Consumer>  
-     { startstrip => { 
-      alert("Toggle Base is2 = " +  startstrip.toggleBase) 
+    { startstrip => { 
+      // alert("Toggle Base is2 = " +  startstrip.toggleBase) 
 
-        const textValue = startstrip.toggleBase? "Start Trip" : "Stop Trip";
-        const buttonBG = startstrip.toggleBase? "green" : "red";
-        const textColor = startstrip.toggleBase? "white" : "yellow";
-        
+      const textValue = startstrip.toggleBase? "Start Trip" : " Stop Trip";
+      const buttonBG = startstrip.toggleBase? "#72db93" : "#f0ff00";
+      const textColor = startstrip.toggleBase? "#518662" : "#fd7f00";
+      const borderColor = startstrip.toggleBase? "#72db93" :'#fd7f00';
+          
       return (  
-      <View style={{ flexDirection: 'row'}}>  
-        <TouchableOpacity
-          style={[styles.button, {backgroundColor:buttonBG}]}  
-          onPress={ () => buttonPressed(startstrip)}
-        >
-        <Text style={[styles.text, {color:textColor}]}> {textValue} </Text> 
-        </TouchableOpacity>
-      </View>
-      )
-     }
-
-      }
+        <View style={{ flexDirection: 'row'}}>  
+          <TouchableOpacity
+            style={[styles.button, {backgroundColor:buttonBG}, {borderColor: borderColor}]}  
+            onPress={ () => buttonPressed(startstrip)}
+          >
+          <Text style={[styles.text, {color:textColor}]}> {textValue} </Text> 
+          </TouchableOpacity>
+        </View>
+        )
+    }}
    </StartStopContext.Consumer>
   );
-
 }
 
 
@@ -75,68 +51,18 @@ const styles = StyleSheet.create({
   button: {
     borderColor: 'red',
     borderWidth: 2,
-    borderRadius: 15,                  
+    borderRadius: 45,                   
     paddingTop: 20,
     paddingBottom: 20,
     marginBottom: 10, 
-    width: "90%",
+    width: "77%",
     justifyContent: "center"
   },
   text: {
     flexDirection: 'row',
     fontSize: 20,
-    fontWeight: "bold",
+    fontWeight: "600",
     borderColor: 'red',                       
     textAlign: 'center', 
   }
 });
-
-
-
-
-  //const [toggle, setToggle] = useState(true)
-  //const navigation = useNavigation();
-//
-  //const buttonPressed = () => {
-  //    setToggle(!toggle)
-  //    navigation.navigate('StartTrip')
-  //};
-//
-  //const textValue = toggle? "Start Trip" : "Trip Running";
-  //const buttonBG = toggle? "blue" : "red";
-  //const textColor = toggle? "white" : "yellow";
-
-
-
-  //const [toggle, setToggle] = useState(true)
-  //const navigation = useNavigation()
-  //
-  //const buttonPressed = (startstrip) => {
-  //   alert(" Start Trip = " + startstrip.toggleBase) 
-  //  //startstop.toggleBase = (!startstop.toggleBase)
-  //  //alert(startstop.toggleBase) 
-  //  //setToggle(!toggle)
-  //  //startstrip.toggleBase = (!startstrip.toggleBase)
-  //  if (startstrip.toggleBase == true) {
-  //  // alert(" Start Trip = " + startstrip.toggleBase)
-  //   startstrip.toggleBase = (!startstrip.toggleBase)
-  //   setToggle(startstrip.toggleBase)
-  //   alert(" Toggle Base = " + startstrip.toggleBase)
-  //   startstrip.setToggleBase(startstrip.toggleBase)
-  //  }
-  // if (startstrip.toggleBase == false) {
-  //  alert(" Start Trip = " + startstrip.toggleBase)
-  //   setToggle(!toggle)
-  //   startstrip.toggleBase = (!startstrip.toggleBase)
- //
-  //   alert(" Start Trip CHANGED TO = " + startstrip.toggleBase)
- //
-  //   //alert(startstrip.toggleBase) 
-  // }
- //
-  //}
- //
-  //const textValue = toggle? "Start Trip" : "Stop Trip";
-  //const buttonBG = toggle? "green" : "red";
-  //const textColor = toggle? "white" : "yellow";
- //

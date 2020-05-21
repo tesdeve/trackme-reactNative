@@ -1,19 +1,14 @@
 import React from 'react';
 import { StyleSheet, View, Text } from 'react-native';
-import Button from '../components/Button';
-//import Button from '../components/boton';
 import colors from '../utils/colors';
 import StartTripButton from '../components/StartTripButton';
 export default function StartTrip({navigation}) {
   
   return (
-      
     <View style={styles.container}>
       <Text> OE!! Ready Start Trip</Text>
-
       <StartTripButton />
     </View> 
-      
   )
 }
 
