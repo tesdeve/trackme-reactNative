@@ -10,7 +10,13 @@ import React, { useState }  from 'react';
 const StartStopContext = React.createContext();
 const StartStopProvider = (props) => {
   const [ toggleBase, setToggleBase ] =  useState(true) 
-  const [ textValue , setTextValue ] =  useState("Start Trip ") // : "Trip Running"
+  const  [count, setCount] =  useState(0) // : "Trip Running"
+  const [ textValue , setTextValue ] =  useState("Start Trip ") 
+
+ 
+
+
+
   //const [ toggleBase ] =  useState(true) 
     //state = {
     //  toggleBase: true
@@ -26,8 +32,10 @@ const StartStopProvider = (props) => {
         value={{
           toggleBase,
           textValue,
+          count, 
           setToggleBase,
-          setTextValue
+          setTextValue,
+          setCount,
         }} 
       >        
         {props.children}

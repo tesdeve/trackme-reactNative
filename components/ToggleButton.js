@@ -22,7 +22,7 @@ export default function ToggleButton(startstop){
    <StartStopContext.Consumer>  
      { startstop =>
         {
-          //alert("Toggle Base is1 = " +  startstop.toggleBase) 
+        //  alert("Toggle Base is at  Home Page = " +  startstop.toggleBase) 
           const textValue = startstop.toggleBase? "Start Trip" : "Trip Currently Running";
           const buttonBG = startstop.toggleBase? "#72db93" : "#f0ff00";
           const textColor = startstop.toggleBase? "#518662" : "#fd7f00";
