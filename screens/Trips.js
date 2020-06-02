@@ -63,20 +63,28 @@ export default class Trips extends React.Component {
     const tripsSorted = trips.sort((a, b) =>
       a.name.localeCompare(b.name));
 
-    return (
-      <View style={styles.container}>
-        {loading && <ActivityIndicator size="large" />}
-        {error && <Text>Error...Aquiiii!!! </Text>}
-        {!loading &&
-          !error && (
-            <FlatList
-              data={tripsSorted}
-              keyExtractor={keyExtractor}
-              renderItem={this.renderTrip}
-            />
-          )}
-      </View>
-    );
+    //return (
+    //  <StartStopContext.Consumer>  
+    //    { counterStartTrip => { 
+    //    console.log(" Marios Tets")
+
+          return(
+          <View style={styles.container}>
+            {loading && <ActivityIndicator size="large" />}
+            {error && <Text>Error...Aquiiii!!! </Text>}
+            {!loading &&
+              !error && (
+                <FlatList
+                  data={tripsSorted}
+                  keyExtractor={keyExtractor}
+                  renderItem={this.renderTrip}
+                />
+              )}
+          </View>
+          )
+      //        }}
+      //</StartStopContext.Consumer>  
+    //);
   }
 }
 

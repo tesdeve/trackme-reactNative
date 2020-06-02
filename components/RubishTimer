@@ -1,169 +1,336 @@
-  ////////////////////////////////////////////////////////////////////////////////////
+    ////////////////////////////////////////////////////////////////////////////////////
 
-                    Second Try
+                 3ro = TOTALLY Works 
+                 
   /////////////////////////////////////////////////////////////////////////////////////////
 
 
+   
+import React, { useState , useEffect, useContext}  from 'react';
+import { Button, View, StyleSheet,Text, TouchableOpacity} from 'react-native';
+import moment from 'moment'
+import { StartStopContext } from '../StartStopContext'
+
+
+export default function Timer() {
+  const  counter =  useContext(StartStopContext)
+
+  setCountReset = () => {
+    counter.setCount(0);
+    counter.setToggleBase(false);
+    counter.interval = null
+  }
+  
+  const textValue = counter.toggleBase? "Stop & Save" : "";
+  const buttonBG = counter.toggleBase? "red" :  "";
+  const textColor = counter.toggleBase?  "white": "";
+  const borderColor = counter.toggleBase?  'red' :"" ; 
+
+    return(
+        <View style={styles.container}>
+          <Text style={styles.Text}>{counter.count}</Text>                    
+          { counter.toggleBase != false &&
+          <View style={styles.buttonReset}>
+            <TouchableOpacity
+                style={[styles.button, {backgroundColor:buttonBG}, {borderColor: borderColor}]}  
+                onPress={ () => setCountReset()}
+              >
+              <Text style={[styles.text, {color:textColor}]}> {textValue} </Text>
+            </TouchableOpacity>
+            </View>
+          }
+        </View>
+      )
+  }
+
+  const styles = StyleSheet.create({
+      container: {
+      flex: 1,
+     
+      backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+   },
+    Text:{
+      fontSize: 40,
+   },
+   buttonReset: {
+    flexDirection: 'row', 
+   },
+   button: {
+    borderColor: 'red',
+    borderWidth: 2,
+    borderRadius: 45,                   
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginBottom: 10, 
+    marginTop: 30, 
+    width: "77%",
+    justifyContent: "center"
+  },
+  text: {
+    //flexDirection: 'row',
+    fontSize: 20,
+    fontWeight: "600",
+    borderColor: 'red',                       
+    textAlign: 'center', 
+  }
+ })
+
+
+
+
+    ////////////////////////////////////////////////////////////////////////////////////
+
+                 2do Try  = Works in a way. Counts and maitain counting when 
+                 moving away but start from the second that is currently on the system
+                 it shound be from the counting. The if after setting setIsActive(counterStartTrip.toggleBase) 
+                 is the only difference with 6to
+                 
+  /////////////////////////////////////////////////////////////////////////////////////////   
+
+
+
+
+   
 import React, { useState , useEffect }  from 'react';
-import { StyleSheet,Text} from 'react-native';
+import { Button, View, StyleSheet,Text} from 'react-native';
 import moment from 'moment'
 import { StartStopContext } from '../MyContext'
 
 
-export default function Timer(counterStartTrip) {
-let [seconds, setSeconds] = useState(0);
-let [isActive, setIsActive] = useState(false);
+export default function Timer() {
+  let [seconds, setSeconds] = useState(0);
+  let [minutes, setMinutess] = useState(0);
+  let [hours, setHours] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
-  function toggle() {
-    setIsActive(!isActive);
+  function toggle(counterStartTrip) {
+    setIsActive(counterStartTrip.toggleBase)
+    if (counterStartTrip.count == 0 ){
+      counterStartTrip.start = new Date().getTime()
+    }
+      counterStartTrip.now = new Date().getTime()
+      counterStartTrip.start = new Date().getTime()
+      //counterStartTrip.setNow(counterStartTrip.now)
+      hours =   moment(counterStartTrip.now).hours()
+      minutes = moment(counterStartTrip.now).minutes()     
+      seconds = moment(counterStartTrip.now).seconds()
+    
+      console.log("NOW FROM CONTEXT ARRIBA HOURS: " + hours)
+      console.log("NOW FROM CONTEXT ARRIBA MINUTES: " + minutes)
+      console.log("NOW FROM CONTEXT ARRIBA SECONDS: " + seconds)
+
+    console.log(" This is Count from Context Arriba" + counterStartTrip.count)
+    counterStartTrip.count = seconds
+    counterStartTrip.setCount(counterStartTrip.count)
+    counterStartTrip.count = counterStartTrip.now - counterStartTrip.start
   }
-//
-// setCountReset = () => {
-//   setSeconds(0);
-//   setIsActive(false);
-// }
+
+  setCountReset = () => {
+    setSeconds(0);
+    setIsActive(false);
+  }
 
   useEffect(() => {
     let interval = null;
     if (isActive) {
       interval = setInterval(() => {
         setSeconds(seconds => seconds + 1);
-        console.log(seconds)
+        console.log("INTERVAL: " + interval)
       }, 1000);
-      
     } else if (!isActive && seconds !== 0) {
       clearInterval(interval);
-      console.log(seconds)
     }
     return () => clearInterval(interval);
   }, [isActive, seconds]);
+  
+ return(
+      <StartStopContext.Consumer>  
+        { counterStartTrip => { 
 
-
- 
-
-
-  //  const duration = moment.duration(count)  /* {interval} */
-  //  const centiseconds = Math.floor(duration.milliseconds()/10)
-
-  return(
-     <StartStopContext.Consumer>  
-       { counterStartTrip => { 
-             const duration = moment.duration(seconds)  /* {interval} */
-             const centiseconds = Math.floor(duration.milliseconds()/10)
-         //const [start, setStart] = useState(0)
-         //const timer = now -start
-         //const duration = moment.duration(timer)  /* {interval} */
-         //const centiseconds = Math.floor(duration.milliseconds()/10)
-         
-         
-
-          return( 
-            
-
-            <Text style={styles.timer}> {seconds} </Text> 
-              /* {duration.minutes()}:
-              {duration.seconds()}:
-              {centiseconds}         */
-            // </Text> 
-          )          
+          if (counterStartTrip.toggleBase === true){
+            toggle(counterStartTrip)
+            console.log(seconds)
+            console.log(" This is Count from Context Abajo: " + counterStartTrip.count)
+            console.log(" This is NOW from Context Abajo: " + counterStartTrip.now)
+            console.log(" This is START Context Abajo: " + counterStartTrip.now)
+          }else {
+            console.log(counterStartTrip.toggleBase)
+            setCountReset()
+           }
+            return(
+              <View style={styles.container}>
+                {/* seconds counterStartTrip.count */}
+                <Text style={styles.Text}>{seconds}</Text>
+                {/* <Text style={styles.Text}>{minutes}</Text>
+                <Text style={styles.Text}>{minutes}</Text> */}
+                <Button
+                  title= 'Up'
+                  onPress={() => {
+                    toggle()
+                  }}
+                ></Button>
+                      <Button
+                  title= 'Reset'
+                  onPress={() => {
+                    setCountReset()
+                  }}
+                ></Button>
+              </View>
+            )
         }}
-    </StartStopContext.Consumer>
+        </StartStopContext.Consumer>
     )
-}
+  }
 
-const styles = StyleSheet.create({
-  timer: {
-    color: 'green',
-    fontSize: 40,
-    fontWeight: '200',
-    marginVertical: 40,
-  },
-})
+  const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+       backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+   },
+    Text:{
+        fontSize: 40,
+   }
+ })
 
+    ////////////////////////////////////////////////////////////////////////////////////
 
-
-
-
-
-
-
-
-
-  ////////////////////////////////////////////////////////////////////////////////////
-
-                        ORIGINAL
-  /////////////////////////////////////////////////////////////////////////////////////////
-
-
+                 1ro Try  = Works in a way. Counts and maitain counting when 
+                 moving away but start from the second that is currently on the system
+                 it shound be from the counting
+  /////////////////////////////////////////////////////////////////////////////////////////   
+   
 import React, { useState , useEffect }  from 'react';
-import { StyleSheet,Text} from 'react-native';
+import { Button, View, StyleSheet,Text} from 'react-native';
 import moment from 'moment'
 import { StartStopContext } from '../MyContext'
-import { set } from 'react-native-reanimated';
-
-function Timer() {
-
-let  [now, setNow] = useState(0)
-let [start, setStart] = useState(0)
-let timer = now -start
-const setTimer = () => {
-  0
-}
 
 
-function count(startstrip){
- 
-  if (startstrip.toggleBase == false){
-    now = new Date().getTime()
-    start = now
-   // setStart(now)
-    //alert(now + '- Positivo')
-    timer = setInterval(() => {
-      setTimer({ now: new Date().getTime() })}, 100)
-  } else {
-    alert( true)
-    //return(true)
+export default function Timer() {
+  let [seconds, setSeconds] = useState(0);
+  let [minutes, setMinutess] = useState(0);
+  let [hours, setHours] = useState(0);
+  const [isActive, setIsActive] = useState(false);
+
+  function toggle(counterStartTrip) {
+    setIsActive(counterStartTrip.toggleBase)
+    //if (counterStartTrip.count < 1 &&  setIsActive == true ){
+      counterStartTrip.now = new Date().getTime()
+      counterStartTrip.start = new Date().getTime()
+      //counterStartTrip.setNow(counterStartTrip.now)
+      hours =   moment(counterStartTrip.now).hours()
+      minutes = moment(counterStartTrip.now).minutes()     
+      seconds = moment(counterStartTrip.now).seconds()
+    
+      console.log("NOW FROM CONTEXT ARRIBA HOURS: " + hours)
+      console.log("NOW FROM CONTEXT ARRIBA MINUTES: " + minutes)
+      console.log("NOW FROM CONTEXT ARRIBA SECONDS: " + seconds)
+
+    console.log(" This is Count from Context Arriba" + counterStartTrip.count)
+    counterStartTrip.count = seconds
+    counterStartTrip.setCount(counterStartTrip.count)
+    counterStartTrip.count = counterStartTrip.now - counterStartTrip.start
   }
-}
 
+  setCountReset = () => {
+    setSeconds(0);
+    setIsActive(false);
+  }
 
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setSeconds(seconds => seconds + 1);
+        console.log("SECOND IN USEEFFECT: " + seconds)
+      }, 1000);
+    } else if (!isActive && seconds !== 0) {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive, seconds]);
+  
+ return(
+      <StartStopContext.Consumer>  
+        { counterStartTrip => { 
 
-
-    const duration = moment.duration(timer)  /* {interval} */
-    const centiseconds = Math.floor(duration.milliseconds()/10)
-
-  return(
-     <StartStopContext.Consumer>  
-       { startstrip => { 
-         //const [start, setStart] = useState(0)
-         //const timer = now -start
-         //const duration = moment.duration(timer)  /* {interval} */
-         //const centiseconds = Math.floor(duration.milliseconds()/10)
-          count(startstrip)
-          return( 
-            <Text style={styles.timer}> 
-              {duration.minutes()}:
-              {duration.seconds()}:
-              {centiseconds}        
-            </Text> 
-          )          
-        }
-      }
-    </StartStopContext.Consumer>
+          if (counterStartTrip.toggleBase === true){
+            toggle(counterStartTrip)
+            console.log(seconds)
+            console.log(" This is Count from Context Abajo: " + counterStartTrip.count)
+            console.log(" This is NOW from Context Abajo: " + counterStartTrip.now)
+            console.log(" This is START Context Abajo: " + counterStartTrip.now)
+          }else {
+            console.log(counterStartTrip.toggleBase)
+            setCountReset()
+           }
+            return(
+              <View style={styles.container}>
+                {/* seconds counterStartTrip.count */}
+                <Text style={styles.Text}>{seconds}</Text>
+                {/* <Text style={styles.Text}>{minutes}</Text>
+                <Text style={styles.Text}>{minutes}</Text> */}
+                <Button
+                  title= 'Up'
+                  onPress={() => {
+                    toggle()
+                  }}
+                ></Button>
+                      <Button
+                  title= 'Reset'
+                  onPress={() => {
+                    setCountReset()
+                  }}
+                ></Button>
+              </View>
+            )
+        }}
+        </StartStopContext.Consumer>
     )
-}
+  }
 
-const styles = StyleSheet.create({
-  timer: {
-    color: 'green',
-    fontSize: 40,
-    fontWeight: '200',
-    marginVertical: 40,
-  },
-})
+  const styles = StyleSheet.create({
+      container: {
+        flex: 1,
+       backgroundColor: '#fff',
+      alignItems: 'center',
+      justifyContent: 'center',
+   },
+    Text:{
+        fontSize: 40,
+   }
+ })
 
-
-export default Timer
-
-
-
+// function toggle(counterStartTrip) {
+//  setIsActive(!counterStartTrip.toggleBase)
+//  console.log(" This is Count from Context Arriba" + counterStartTrip.count)
+//  console.log(" This is Now from Context Arriba" + counterStartTrip.count)
+//  counterStartTrip.now = new Date().getTime()
+//  counterStartTrip.setNow(counterStartTrip.now )
+//  console.log(" This is Now from Context Arriba" + counterStartTrip.now)
+//
+//
+//
+//  counterStartTrip.count = seconds    
+//  counterStartTrip.setCount(counterStartTrip.count)
+//}
+//
+//setCountReset = () => {
+//  setSeconds(0);
+//  setIsActive(false);
+//}
+//
+//useEffect(() => {
+//  let interval = null;
+//  if (isActive) {
+//    interval = setInterval(() => {
+//      setSeconds( {second: new Date().getTime()});
+//    }, 1000);
+//  } else if (!isActive && seconds !== 0) {
+//    clearInterval(interval);
+//  }
+//  return () => clearInterval(interval);
+//}, [isActive, seconds]);

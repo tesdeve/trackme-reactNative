@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
-import { StartStopContext } from '../MyContext'
+import { StartStopContext } from '../StartStopContext'
 
 
 export default function StartTripButton(){
 
 
- const [toggle, setToggle] = useState(true)
+ //const [toggle, setToggle] = useState(true)
  const navigation = useNavigation()
  
  const buttonPressed = (startstrip) => {
@@ -17,13 +17,12 @@ export default function StartTripButton(){
   return (     
    <StartStopContext.Consumer>  
     { startstrip => { 
-     // alert("Toggle Base is at StartTrip page = " +  startstrip.toggleBase) 
+    // alert("Toggle Base is at StartTrip page = " +  startstrip.toggleBase)
+     const textValue = startstrip.toggleBase? "Pause Trip" : "Start Trip";
+     const buttonBG = startstrip.toggleBase? "#f0ff00" :  "#72db93";
+     const textColor = startstrip.toggleBase?  "#fd7f00": "#518662";
+     const borderColor = startstrip.toggleBase?  '#fd7f00' :"#72db93" ; 
 
-      const textValue = startstrip.toggleBase? "Start Trip" : " Stop Trip";
-      const buttonBG = startstrip.toggleBase? "#72db93" : "#f0ff00";
-      const textColor = startstrip.toggleBase? "#518662" : "#fd7f00";
-      const borderColor = startstrip.toggleBase? "#72db93" :'#fd7f00';
-          
       return (  
         <View style={{ flexDirection: 'row'}}> 
           <TouchableOpacity

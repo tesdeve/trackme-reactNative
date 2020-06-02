@@ -1,103 +1,71 @@
-import React, { useState , useEffect }  from 'react';
-import { Button, View, StyleSheet,Text} from 'react-native';
+   
+import React, { useState , useEffect, useContext}  from 'react';
+import { Button, View, StyleSheet,Text, TouchableOpacity} from 'react-native';
 import moment from 'moment'
-import { StartStopContext } from '../MyContext'
+import { StartStopContext } from '../StartStopContext'
 
 
 export default function Timer() {
- let [seconds, setSeconds] = useState(0);
-  const [isActive, setIsActive] = useState(false);
-
-  function toggle(counterStartTrip) {
-      setIsActive(!counterStartTrip.toggleBase)
-      //console.log(counterStartTrip.count)
-      //setSeconds(counterStartTrip.count)
-  }
+  const  counter =  useContext(StartStopContext)
 
   setCountReset = () => {
-    setSeconds(0);
-    setIsActive(false);
+    counter.setCount(0);
+    counter.setToggleBase(false);
+    counter.interval = null
   }
-
-  useEffect(() => {
-    let interval = null;
-    if (isActive) {
-      interval = setInterval(() => {
-        setSeconds(seconds => seconds + 1);
-      }, 1000);
-    } else if (!isActive && seconds !== 0) {
-      clearInterval(interval);
-    }
-    return () => clearInterval(interval);
-  }, [isActive, seconds]);
+  
+  const textValue = counter.toggleBase? "Stop & Save" : "";
+  const buttonBG = counter.toggleBase? "red" :  "";
+  const textColor = counter.toggleBase?  "white": "";
+  const borderColor = counter.toggleBase?  'red' :"" ; 
 
     return(
-      <StartStopContext.Consumer>  
-        { counterStartTrip => { 
-
-          if (counterStartTrip.toggleBase === false){
-            toggle(counterStartTrip)
-            console.log(seconds)
-
-          }else {
-            console.log(counterStartTrip.toggleBase)
-            setCountReset()
-           }
-            return(
-              <View style={styles.container}>
-                <Text style={styles.Text}>{seconds}</Text>
-                <Button
-                  title= 'Up'
-                  onPress={() => {
-                    toggle()
-                  }}
-                ></Button>
-                      <Button
-                  title= 'Reset'
-                  onPress={() => {
-                    setCountReset()
-                  }}
-                ></Button>
-              </View>
-            )
-        }}
-        </StartStopContext.Consumer>
-    )
+        <View style={styles.container}>
+          <Text style={styles.Text}>{counter.count}</Text>                    
+          { counter.toggleBase != false &&
+          <View style={styles.buttonReset}>
+            <TouchableOpacity
+                style={[styles.button, {backgroundColor:buttonBG}, {borderColor: borderColor}]}  
+                onPress={ () => setCountReset()}
+              >
+              <Text style={[styles.text, {color:textColor}]}> {textValue} </Text>
+            </TouchableOpacity>
+            </View>
+          }
+        </View>
+      )
   }
 
   const styles = StyleSheet.create({
       container: {
-        flex: 1,
-       backgroundColor: '#fff',
+      flex: 1,
+     
+      backgroundColor: '#fff',
       alignItems: 'center',
       justifyContent: 'center',
    },
     Text:{
-        fontSize: 40,
-   }
+      fontSize: 40,
+   },
+   buttonReset: {
+    flexDirection: 'row', 
+   },
+   button: {
+    borderColor: 'red',
+    borderWidth: 2,
+    borderRadius: 45,                   
+    paddingTop: 20,
+    paddingBottom: 20,
+    marginBottom: 10, 
+    marginTop: 30, 
+    width: "77%",
+    justifyContent: "center"
+  },
+  text: {
+    //flexDirection: 'row',
+    fontSize: 20,
+    fontWeight: "600",
+    borderColor: 'red',                       
+    textAlign: 'center', 
+  }
  })
-
-// const [seconds, setSeconds] = useState(0);
-// const [isActive, setIsActive] = useState(false);
-//
-// function toggle(counterStartTrip) {
-//     setIsActive(!counterStartTrip.toggleBase)
-// }
-//
-// setCountReset = () => {
-//   setSeconds(0);
-//   setIsActive(false);
-// }
-//
-// useEffect(() => {
-//   let interval = null;
-//   if (isActive) {
-//     interval = setInterval(() => {
-//       setSeconds(seconds => seconds + 1);
-//     }, 1000);
-//   } else if (!isActive && seconds !== 0) {
-//     clearInterval(interval);
-//   }
-//   return () => clearInterval(interval);
-// }, [isActive, seconds]);
-//

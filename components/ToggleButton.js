@@ -3,12 +3,12 @@ import React, { useState} from 'react';
 import { StyleSheet, Text, View, TouchableOpacity} from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-import { StartStopContext } from '../MyContext'
+import { StartStopContext } from '../StartStopContext'
 
 
 export default function ToggleButton(startstop){
 
- const [toggle, setToggle] = useState(true)
+// const [toggle, setToggle] = useState(true)
  const navigation = useNavigation()
 
  const buttonPressed = (startstop) => {
@@ -22,11 +22,12 @@ export default function ToggleButton(startstop){
    <StartStopContext.Consumer>  
      { startstop =>
         {
+          console.log(" ToggleBase on Home: " + startstop.toggleBase)
         //  alert("Toggle Base is at  Home Page = " +  startstop.toggleBase) 
-          const textValue = startstop.toggleBase? "Start Trip" : "Trip Currently Running";
-          const buttonBG = startstop.toggleBase? "#72db93" : "#f0ff00";
-          const textColor = startstop.toggleBase? "#518662" : "#fd7f00";
-          const borderColor = startstop.toggleBase? "#72db93" :'#fd7f00';
+          const textValue = startstop.toggleBase? "Trip Currently Running"  : "Start Trip";
+          const buttonBG = startstop.toggleBase?  "#f0ff00" :"#72db93" ;
+          const textColor = startstop.toggleBase?  "#fd7f00" : "#518662";
+          const borderColor = startstop.toggleBase? '#fd7f00' : "#72db93";
       
           return (    
             <View style={[ styles.homeStartTrip, { flexDirection: 'row'}]}>  
