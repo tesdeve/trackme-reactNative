@@ -4,7 +4,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 
 
-import { StartStopProvider, StartStopContext } from './MyContext'
+import { StartStopProvider, StartStopContext } from './StartStopContext'
 
 
 import Home from './screens/Home';

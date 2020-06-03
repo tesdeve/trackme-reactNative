@@ -3,11 +3,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import { TouchableOpacity, Text, StyleSheet } from 'react-native';
 
+
 const PRIMARY_COLOR = '#007bff';
 const SECONDARY_COLOR = '#2B823A';
 
 const styles = StyleSheet.create({
-  // Container Styles
   containerDefault: {
     alignItems: 'center',
     paddingVertical: 10,
