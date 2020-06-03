@@ -1,3 +1,17 @@
+   </View>
+{ counter.toggleBase != false && counter.textValue == 'Continue' &&
+<View style={styles.buttonReset}>
+  <TouchableOpacity
+      style={[styles.button, {backgroundColor:buttonBG}, {borderColor: borderColor}]}  
+      onPress={ () => setCountReset()}
+    >
+    <Text style={[styles.text, {color:textColor}]}> {textValue} </Text>
+  </TouchableOpacity>
+  </View>
+}
+</View>
+   
+   
     ////////////////////////////////////////////////////////////////////////////////////
 
                  3ro = TOTALLY Works 

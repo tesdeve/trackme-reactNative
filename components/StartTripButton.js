@@ -6,10 +6,7 @@ import { StartStopContext } from '../StartStopContext'
 
 export default function StartTripButton(){
 
-
- //const [toggle, setToggle] = useState(true)
  const navigation = useNavigation()
- 
  const buttonPressed = (startstrip) => {
     startstrip.setToggleBase(!startstrip.toggleBase) 
  }
@@ -17,8 +14,15 @@ export default function StartTripButton(){
   return (     
    <StartStopContext.Consumer>  
     { startstrip => { 
-    // alert("Toggle Base is at StartTrip page = " +  startstrip.toggleBase)
-     const textValue = startstrip.toggleBase? "Pause Trip" : "Start Trip";
+      if (!startstrip.toggleBase && startstrip.count === 0){
+        startstrip.textValue = "Start Trip"
+      }
+      else if (startstrip.toggleBase){
+        startstrip.textValue = "Pause Trip" 
+      }
+      else if (!startstrip.toggleBase && startstrip.count !== 0) {
+        startstrip.textValue = "Continue"
+      }
      const buttonBG = startstrip.toggleBase? "#f0ff00" :  "#72db93";
      const textColor = startstrip.toggleBase?  "#fd7f00": "#518662";
      const borderColor = startstrip.toggleBase?  '#fd7f00' :"#72db93" ; 
@@ -29,7 +33,7 @@ export default function StartTripButton(){
             style={[styles.button, {backgroundColor:buttonBG}, {borderColor: borderColor}]}  
             onPress={ () => buttonPressed(startstrip)}
           >
-          <Text style={[styles.text, {color:textColor}]}> {textValue} </Text> 
+          <Text style={[styles.text, {color:textColor}]}> {startstrip.textValue} </Text> 
           </TouchableOpacity>
         </View>
         )

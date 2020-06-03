@@ -10,18 +10,16 @@ const StartStopProvider = (props) => {
   let  [count, setCount] =  useState(0) // counter
   let  [now, setNow] =  useState(0) // Runs all the time so it is the current time
   let  [start, setStart] =  useState(0) // counter
- 
 
   let interval = null;
   const timerController = () => {
     interval = setInterval(() => {
       setCount(count => count + 1);
-      console.log("INTERVAL: " + interval)
-    }, 1000)
+    }, 100)
   }
 
+
   useEffect(() => {
-    console.log( "TOGGLEBASE in USEEFFECT is: " + toggleBase)
     if (toggleBase) {
       timerController()
     } else if (!toggleBase && count !== 0) {
@@ -29,6 +27,7 @@ const StartStopProvider = (props) => {
     }
     return () => clearInterval(interval);
   }, [toggleBase]);
+
 
     return (
       <StartStopContext.Provider
